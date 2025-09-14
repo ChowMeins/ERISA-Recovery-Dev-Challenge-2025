@@ -68,7 +68,7 @@ python manage.py migrate
 
 Load the provided JSON data files into the database:
 ```bash
-python manage.py load_claims ./claims/claim_list_data.json ./claims/claim_detail_data.json
+python manage.py load_claims ./claims/data/claim_list_data.json ./claims/data/claim_detail_data.json
 ```
 
 This command will populate your database with sample healthcare claims data from the provided JSON files.
