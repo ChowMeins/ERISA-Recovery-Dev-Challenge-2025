@@ -1,6 +1,7 @@
 # ERISA Recovery Dev Challenge 2025
 
 This is my submission to the ERISA Recovery Dev Challenge 2025.
+
 More information about this can be found here: https://www.erisachallenge.dev/requirements
 
 This project was started roughly 5 days before the submission date since I had only found out about it then, however,
