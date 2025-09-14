@@ -1,6 +1,10 @@
 # ERISA Recovery Dev Challenge 2025
 
-A Django web application for managing healthcare claims, built as part of the ERISA Recovery development challenge.
+This is my submission to the ERISA Recovery Dev Challenge 2025.
+More information about this can be found here: https://www.erisachallenge.dev/requirements
+
+This project was started roughly 5 days before the submission date since I had only found out about it then, however,
+given the time I had, I did the best I could to implement as many requirements and any additional features as I can.
 
 ## Features
 
