@@ -23,11 +23,27 @@ git clone https://github.com/ChowMeins/ERISA-Recovery-Dev-Challenge-2025.git
 cd ERISA-Recovery-Dev-Challenge-2025
 ```
 
-### 2. Install Dependencies
+### 2. Set Up Virtual Environment (Recommended)
 
 Before installing dependencies, setting up a virtual environment is recommended.
 
-Install Django in one of two ways:
+Create and activate a virtual environment to isolate project dependencies:
+
+**On Windows:**
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+**On macOS/Linux:**
+```bash
+python -m venv venv
+source venv/bin/activate
+```
+
+### 3. Install Dependencies
+
+You can install Django and other dependencies in one of two ways:
 
 **Option A: Install Django directly**
 ```bash
@@ -64,19 +80,13 @@ Start the Django development server:
 python manage.py runserver
 ```
 
----
+## Usage
 
-## Project Structure
-
-```
-├── claims/                 # Main Django app
-├── templates/             # HTML templates
-├── static/               # CSS, JS, and other static files
-├── data/                 # JSON data files
-├── manage.py            # Django management script
-├── requirements.txt     # Python dependencies
-└── README.md           # This file
-```
+1. **Claims Table**: Navigate to the main page to view all claims in a paginated table
+2. **Search & Filter**: Use the search bar to find claims by ID, patient name, or insurer
+3. **View Details**: Click the ellipsis (⋯) button on any claim row to access the dropdown menu
+4. **Add Notes**: Select "Add Note" to attach notes to a specific claim
+5. **Flag for Review**: Select "Flag for Review" to mark claims that need attention
 
 ## Technologies Used
 
@@ -85,8 +95,7 @@ python manage.py runserver
 
 
 ## Things not implemented
-
 - Admin Dashboard
-- Settings
-- Seeing your flags/notes
-- Log Out feature
+- A UI to view flags/notes (other than clicking the view details button)
+- Logging out
+- Settings Page
