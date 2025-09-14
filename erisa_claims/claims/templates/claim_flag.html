@@ -19,7 +19,7 @@
         hx-post="{% url 'claims_create_flag' claim.id %}"
         x-on:htmx:after-on-load='
             if ($event.detail.successful) {
-            modalOpen = false;
+                modalOpen = false;
             }
         '>
             <!-- CSRF = Cross-Site Request Forgery token -->
