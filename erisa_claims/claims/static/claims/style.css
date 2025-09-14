@@ -1,0 +1,664 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+[x-cloak] { display: none !important; }
+
+#page-content {
+    width: 100%;
+    height: 100%;
+    min-height: 100vh;
+    background-color: rgb(241, 241, 241);
+}
+#page-block {
+    width: 100%;
+    height: 100%;
+}
+.claims-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(241, 241, 241);
+}
+.navbar {
+    width: 100%;
+    display: flex;
+    padding: 0.5rem 3rem;
+    background-color:#ffffff; 
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    border-bottom: 1px solid rgb(224, 224, 224);
+}
+.logo {
+    width: 8rem;
+    margin: auto 0;
+}
+.logo > img {
+    width: 100%;
+}
+.nav-items {
+    width: fit-content;
+    display: flex;
+    gap: 2rem;
+    margin-left: auto;
+    list-style-type: none;
+}
+.nav-items > li {
+    width: fit-content;
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.75rem 0.5rem; 
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.nav-items > li > a {
+    display: flex;
+    gap: 0.5rem;
+    text-decoration: none;
+}
+.nav-items > li > a:link {
+  color: black; /* Or any other desired color */
+}
+
+.nav-items > li > a:visited {
+  color: black; /* Ensure visited links also have the same color */
+}
+
+.nav-items > li:hover {
+    background-color: #e2e2e2;
+}
+.nav-items > li > svg {
+    width: 1.25rem;
+    height: auto;
+    margin: auto 0;
+}
+.nav-items > li > p {
+    margin: auto 0;
+}
+.profile {
+    position: relative;
+}
+.profile > div:first-child {
+    display: flex;
+    gap: 0.5rem;
+}
+.profile > div > p {
+    margin: auto 0;
+}
+.profile-dropdown {
+    width: fit-content;
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 1;
+}
+.profile-dropdown > ul {
+    width: fit-content;
+}
+.profile-dropdown > ul > li {
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.profile:hover > .profile-dropdown {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-dropdown > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-dropdown > ul > li {
+    padding: 10px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.profile-dropdown > ul > li:hover {
+  background-color: #f0f0f0;
+}
+.profile-dropdown {
+    position: absolute;
+}
+.claims-table-container {
+    width: fit-content;
+    margin: 0 auto;
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.search-container {
+    padding: 1rem;
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 10px;
+    background-color: white;
+}
+#search-form {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    margin: 0 auto;
+}
+.search-bar-container {
+    width: 100%;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    background-color: rgba(240, 240, 240);
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+.search-bar-container > svg {
+    width: 1.25rem;
+    height: auto;
+    padding: 0;
+    margin: auto;
+}
+.search-bar {
+    width: 100%;
+    outline: none;
+    border: none;
+    border-radius: 0 10px 10px 0;
+    background-color: transparent;
+}
+.filter {
+    width: fit-content;
+    margin-left: auto;
+    padding: 0 0.5rem;
+    border: 1px solid gray;
+    outline: none;
+    border-radius: 10px;
+    background-color: rgb(240, 240, 240);
+}
+.filter > option > svg {
+    width: 2rem;
+    height: auto;
+}
+.table-container {
+    width: fit-content;
+    height: fit-content;
+    margin: 16px auto;
+    border: 1px solid rgb(228, 228, 228);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.claims-table {
+    width: 70rem;
+    height: fit-content;
+    border-collapse: collapse;
+}
+
+/* Fixed header */
+.claims-table thead {
+    width: 100%;
+    display: block;
+    background-color: rgb(248, 249, 250);
+    border-bottom: 1px solid rgb(200, 200, 200);
+}
+
+.claims-table > thead > tr {
+    width: calc(100% - 8px);
+    display: flex;
+    padding: 10px 15px;
+}
+.claims-table > thead > tr > th {
+    flex-grow: 1;
+    margin: auto 0;
+    padding: 8px 0;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+}
+tr th:nth-of-type(1), tr td:nth-of-type(1) { width: 7.5%; }   /* ID */
+tr th:nth-of-type(2), tr td:nth-of-type(2) { width: 15%; }  /* Patient Name */
+tr th:nth-of-type(3), tr td:nth-of-type(3) { width: 12.5%; }  /* Billed Amount */
+tr th:nth-of-type(4), tr td:nth-of-type(4) { width: 12.5%; }  /* Paid Amount */
+tr th:nth-of-type(5), tr td:nth-of-type(5) { width: 15%; }  /* Status */
+tr th:nth-of-type(6), tr td:nth-of-type(6) { width: 15%; }  /* Insurer Name */
+tr th:nth-of-type(7), tr td:nth-of-type(7) { width: 12.5%; }  /* Discharge Date */
+tr th:nth-of-type(8), tr td:nth-of-type(8) { width: 10%; }   /* Actions */
+/* Scrollable body */
+.claims-table > tbody {
+    height: fit-content;
+    max-height: 36rem;
+    display: block;
+    overflow-y: scroll;
+    background-color: white;
+}
+.claims-table > tbody > tr {
+    width: 100%;
+    display: flex;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgb(180, 180, 180, 0.5);
+
+}
+.claims-table > tbody > tr > td {
+    flex-grow: 1;
+    margin: auto 0;
+    text-align: left;
+}
+.claim-row:hover {
+    background-color: rgb(240, 240, 240);
+}
+.claim-id {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: rgb(119, 119, 119);
+}
+.patient-name > p {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #1e293b;
+}
+/* Align monetary amounts to the right */
+.claim-billed,
+.claim-paid {
+    font-size: 0.9rem;
+    font-family: 'SF Mono', Monaco, monospace;
+    text-align: right;
+    white-space: nowrap;
+}
+.claim-status {
+    width: fit-content;
+    display: flex;
+}
+.status-container {
+    width: fit-content;
+    display: flex;
+    border-radius: 35px;
+    padding-right: 0.75rem;
+}
+.status-container > p {
+    margin: auto;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.8rem;
+    padding: 5px 0px;
+}
+.status-container > svg {
+    width: 1.5rem;
+    height: auto;
+}
+.claim-insurer {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #1e293b;
+}
+/* Status colors */
+.paid {
+    color: #059669; 
+    background-color: rgb(179, 231, 179);
+}
+.denied {
+    color: rgb(218, 60, 60); 
+    background-color: rgb(247, 148, 148);
+}
+.under-review { 
+    color: rgb(0, 119, 255); 
+    background-color: rgb(183, 215, 252)
+}
+.claim-discharge > p {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+.claim-actions {
+    height: 100%;
+    position: relative;
+}
+.dropdown-menu {
+    width: 10rem;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+    top: 100%;
+    left: 0;
+    z-index: 2;
+    transform: translate(-80%, 0);
+    background-color: white;
+    border: 0.5px solid rgb(199, 199, 199);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+
+}
+.dropdown-menu > button {
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    gap: 8px;
+    padding: 0.5rem 1rem;
+    border: none;
+    text-align: left;
+    background-color: white;
+}
+.dropdown-menu > button:hover {
+    background-color: rgb(243, 243, 243);
+}
+.dropdown-menu > button > svg {
+    width: 1rem;
+    height: auto;
+}
+.dropdown-menu > button p {
+    font-size: 0.9rem;
+    margin: auto 0;
+}
+.view-btn {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    gap: 5px;
+    padding: 0.5rem;
+    border-radius: 100%;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: none;
+}
+.view-btn > svg {
+    width: 1.3rem;
+    height: auto;
+}
+.view-btn:hover {
+    background-color: rgb(214, 214, 214);
+}
+.report-btn:hover {
+    background-color: rgb(255, 221, 221)
+}
+/* Custom scrollbar for tbody only */
+.claims-table > tbody::-webkit-scrollbar {
+    width: 8px;
+}
+
+.claims-table > tbody::-webkit-scrollbar-track {
+    background: rgb(248, 249, 250);
+}
+
+.claims-table > tbody::-webkit-scrollbar-thumb {
+    background: rgba(180, 180, 180, 0.8);
+    border-radius: 4px;
+}
+
+.claims-table > tbody::-webkit-scrollbar-thumb:hover {
+    background: rgba(140, 140, 140, 0.8);
+}
+
+.modal-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;  /* covers the whole screen */
+    display:flex;
+    flex-direction: column;
+    top: 0;
+    left: 0;
+    background-color: rgba(54, 54, 54, 0.5);
+    z-index: 5;      /* must be less than modal content z-index */
+}
+
+.modal-wrapper {
+    width: fit-content;
+    display: flex;
+    position: relative;
+    margin: auto auto;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+#modal-content {
+    padding: 0;
+    width: fit-content;
+}
+.close-btn {
+    width: fit-content;
+    position: absolute;
+    display: flex;
+    top: 0.5rem;
+    right: 0.5rem;
+    border-radius: 100%;
+    border: none;
+    padding: 0.35rem;
+    color: rgb(88, 88, 88);
+    background: none;
+    cursor: pointer;
+}
+.close-btn:hover {
+    background-color: rgb(241, 241, 241);
+}
+.close-btn > svg {
+    width: 2rem;
+    height: auto;
+    margin: auto;
+}
+
+/* The modal itself */
+.detail-modal {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+.detail-header {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgb(228, 228, 228);
+}
+.detail-header > p {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+.modal-details {
+    max-height: 40rem;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0;
+}
+.modal-details > div {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 1.5rem;
+    row-gap: 10px;
+}
+.modal-section {
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    padding: 1rem;
+    border: 1px solid rgb(216, 216, 216);
+    border-radius: 10px;
+}
+.description-heading {
+    display: flex;
+    gap: 0.5rem;
+}
+.description-heading > p {
+    margin: auto 0;
+}
+.modal-info {
+    display: flex;
+    gap: 4rem;
+}
+.notes-container, .flag-container {
+    display: flex;
+    flex-direction: column;
+}
+.modal-heading {
+    display: flex;
+    gap: 0.5rem;
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    border-bottom: 1px solid rgb(199,199,199);
+}
+.modal-heading > p {
+    font-size: 1.1rem;
+}
+.modal-description {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.25rem;
+}
+.modal-description > p:first-child {
+    color: gray;
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+.modal-description > p:nth-child(2) {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+    font-weight: 500;
+}
+.modal-status {
+    width: fit-content;
+    padding: 0.5rem !important;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.modal-billed, .modal-paid {
+    font-size: 1.1rem;
+    font-family: 'SF Mono', Monaco, monospace;
+}
+.modal-billed {
+    color: rgb(241, 123, 123);
+}
+.modal-paid {
+    color: #059669;
+}
+.cpt-codes {
+    display: flex;
+    gap: 0.5rem;
+}
+.cpt-codes > p {
+    padding: 0.25rem;
+    border: 1px solid rgb(229,229,229);
+    border-radius: 10px;
+}
+.note-modal {
+    width: 30rem;
+}
+.note-section {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+.note-section > p {
+    font-size: 0.9rem;
+    padding: 0 1.5rem;
+    color: gray;
+}
+.modal-user-info {
+    display: flex;
+    padding: 0 1.5rem;
+    gap: auto;
+}
+.modal-user-info > p {
+    width: fit-content;
+    font-weight: 500;
+}
+.modal-patient-name {
+    font-size: 1.2rem;
+    margin: auto 0;
+}
+.modal-user-status {
+    display: flex;
+    padding: 0.25rem 0.6rem 0.25rem 0;
+    margin-left: auto;
+    border-radius: 24px;
+}
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+.modal-form > div {
+    padding: 1rem 1.5rem;
+}
+.modal-form > div > textarea {
+    width: 100%;
+    height: 8rem;
+    padding: 0.5rem 0.5rem;
+    outline: none;
+    resize: none;
+    border-radius: 10px;
+    background-color: rgb(245, 245, 245);
+}
+.char-count {
+    width: fit-content;
+    margin-left: auto;
+    font-size: 0.9rem;
+    color: gray;
+}
+.button-container {
+    display: flex;
+    padding: 1rem 1rem;
+    border-top: 1px solid rgb(199, 199, 199);
+}
+.cancel-btn, .submit-btn {
+    background-color: none;
+    padding: 0.5rem 0.75rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+.cancel-btn {
+    background-color:rgb(243, 243, 243);
+}
+.cancel-btn:hover {
+    background-color:rgb(223, 223, 223);
+}
+.submit-btn {
+    margin-left: auto;
+    color: white;
+    background-color: rgb(47, 134, 248);
+}
+.submit-btn:hover {
+    background-color: rgb(40, 117, 218);
+}
+.pagination {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.pagination-center {
+    padding: 5px 10px;
+    display: flex;
+    gap: 5px;
+}
+.pagination-center > input {
+    width: 3rem;
+    font-size: 0.9rem;
+    text-align: center;
+    margin: 0 auto;
+    padding: 4px 4px;
+}
+/* Remove increment and decrement arrows from input */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.pagination-center > p {
+    margin: auto;
+}

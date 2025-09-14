@@ -1,0 +1,122 @@
+<div class='detail-modal'>
+    <div class='modal-heading'>
+        {% include 'icons/file_text_icon.svg' %}
+        <p>Claim ID: {{ claim_detail.id }}</p>
+    </div>
+    <div class='modal-details'>
+        <div>
+            <div class='modal-section'>
+                <div class='description-heading'> 
+                    {% include 'icons/user_icon.svg' %} 
+                    <p> Patient Information </p>
+                </div>
+                <div class='modal-info'> 
+                    <div class='modal-description'>
+                        <p>Patient</p>
+                        <p>{{ claim_detail.patient_name }} </p>
+                    </div>
+                    <div class='modal-description'>
+                        <p> Status </p>
+                        <p class="modal-status {% if claim_detail.status == 'Paid' %}paid{% elif claim_detail.status == 'Under Review' %}under-review{% elif claim_detail.status == 'Denied' %}denied{% endif %}">
+                            {{ claim_detail.status }} 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class='modal-section'>
+                <div class='description-heading'> 
+                    {% include 'icons/dollar_icon.svg' %} 
+                    <p> Financial Details </p>
+                </div>
+                <div class='modal-info'> 
+                    <div class='modal-description'>
+                        <p> Billed </p>
+                        <p class='modal-billed'> 
+                            ${{ claim_detail.billed_amount }} 
+                        </p>
+                    </div>
+                    <div class='modal-description'>
+                        <p> Paid </p>
+                        <p class="modal-paid">
+                            ${{ claim_detail.paid_amount }} 
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class='modal-section'>
+                <div class='description-heading'> 
+                    {% include 'icons/calendar_icon.svg' %} 
+                    <p> Medical Details </p>
+                </div>
+                <div class='modal-info'> 
+                    <div class='modal-description'>
+                        <p> Discharge Date </p>
+                        <p class=''> 
+                            {{ claim_detail.discharge_date|date:"m/d/Y" }} 
+                        </p>
+                    </div>
+                    <div class='modal-description'>
+                        <p> Insurer </p>
+                        <p>
+                            {{ claim_detail.insurer_name }} 
+                        </p>
+                    </div>
+                </div>
+                <div class='modal-description'>
+                    <p> CPT Codes </p>
+                    <div class='cpt-codes'>
+                        {% for cpt_code in claim_detail.cpt_codes %}
+                            <p> {{cpt_code}} </p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- If the claim has notes -->
+        {% if claim_detail.claim_notes %}
+        <div>
+            <div class='modal-section'>
+                <div class='description-heading'> 
+                    {% include 'icons/note_icon.svg' %} 
+                    <p> Notes </p>
+                </div>
+                <div class='modal-info'> 
+                    <div class='note-container'>
+                        {% for note in claim_detail.claim_notes %}
+                        <div>
+                            <p> {{ note.note_text }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <!-- If the claim has flags -->
+        {% if claim_detail.claim_flags %}
+        <div>
+            <div class='modal-section'>
+                <div class='description-heading'> 
+                    {% include 'icons/flag_icon.svg' %} 
+                    <p> Flags </p>
+                </div>
+                <div class='modal-info'> 
+                <div class='modal-info'> 
+                    <div class='flag-container'>
+                        {% for flag in claim_detail.claim_flags %}
+                        <div>
+                            <p> {{ flag.flag_text }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>

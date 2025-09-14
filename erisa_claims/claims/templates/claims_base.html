@@ -1,0 +1,51 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}ERISA Recovery{% endblock %}</title>
+
+        <!-- Global stylesheet -->
+        <link rel="stylesheet" href="{% static 'claims/style.css' %}">
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <div id='page-content'>
+            <div class='navbar'>
+            <a class='logo'>
+                <img src="{% static 'claims/erisa_logo.png' %}" alt="Erisa Logo" />
+            </a>
+            <ul class='nav-items'>
+                <li> <a href={% url 'claims' %}>{% include "icons/search_icon.svg" %} <p> Search Records </p> </li>
+                <li> <a href={% url 'flags' %}>{% include "icons/flag_icon.svg" %} <p> Flagged Claims </p> </a> </li>
+                <li> <a href=''>{% include "icons/dashboard_icon.svg" %} <p>Admin Dashboard </p> </a> </li>
+                <li> <a href=''>{% include "icons/settings_icon.svg" %} <p> Settings </p> </a> </li>
+                <li class='profile'> 
+                    <div> {% include "icons/user_icon.svg" %} <p>{{request.user.first_name}} {{request.user.last_name}}</p> </div>
+                    <div class='profile-dropdown'>
+                        <ul>
+                            <li> My Profile </li>
+                            <li> Settings </li>
+                            <li> Annotations </li>
+                            <li> Admin Dashboard </li>
+                            <li> Log Out </li>
+                        </ul>
+                    </div> 
+                </li>
+            </ul>
+        </div>
+        <div id='page-block'>
+            {% block content %} {% endblock %}
+        </div>
+    </div>
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <!-- Alpine.js -->
+    <script src="https://unpkg.com/alpinejs@3.x.x" defer></script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

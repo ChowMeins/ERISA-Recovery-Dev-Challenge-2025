@@ -1,0 +1,38 @@
+<!-- This modal is used to add notes/flag claims for review-->
+<div class='note-modal'>
+    <div class='modal-heading'> 
+        {% include 'icons/notebook_icon.svg' %}
+        <p>Add Note</p>
+    </div>
+    <div class='note-section'>
+        <p> Client ID: #{{ claim.id }} </p>
+        <div class='modal-user-info'>
+            <p class='modal-patient-name'> {{ claim.patient_name }} </p>
+            <p class='modal-user-status
+            {% if claim.status == 'Paid' %}paid
+            {% elif claim.status == 'Under Review' %}under-review
+            {% elif claim.status == 'Denied' %}denied{% endif %}
+            '
+            > {% include 'icons/dot_icon.svg' %}{{claim.status}} </p>
+        </div>
+        <form class='modal-form' x-data="{ text: '', max: 500 }"
+        hx-post="{% url 'claims_create_note' claim.id %}"
+         x-on:htmx:after-on-load='
+            if ($event.detail.successful) {
+                modalOpen = false;
+            }
+        '>
+            <!-- CSRF = Cross-Site Request Forgery token -->
+            {% csrf_token %}
+            <div>
+                <textarea name='form_text' x-model="text" :maxlength="max"> </textarea>
+                <p class='char-count' x-text="text.length + '/' + max + ' characters left'"/>
+            </div>
+            <div class='button-container'>
+                <button class='cancel-btn' type="button" @click='modalOpen = false;'> Cancel </button> 
+                <button class='submit-btn' type='submit'> Create Note </button>
+            </div>
+        </form>
+    </div>
+</div>
+

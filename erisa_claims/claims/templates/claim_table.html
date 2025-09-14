@@ -1,0 +1,134 @@
+<div class="table-container">
+            <table class="claims-table">
+                <thead>
+                    <tr>
+                        <th> ID </th> 
+                        <th> PATIENT NAME </th>
+                        <th> BILLED AMOUNT </th>
+                        <th> PAID AMOUNT </th>
+                        <th> STATUS </th>
+                        <th> INSURER NAME </th>
+                        <th> DISCHARGE DATE </th>
+                        <th> ACTIONS </th> 
+                    </tr>
+                </thead>
+                <tbody id='table-data' x-data="{ recordId: null }">
+                    <!-- Table rows go here -->
+                    {% for claim in claims %}
+                    <tr class="claim-row">
+                        <td class="claim-id">
+                            <p>#{{ claim.id }}</p>
+                        </td>
+                        <td class="patient-name">
+                            <p>{{ claim.patient_name }}</p>
+                        </td>
+                        <td class="claim-billed">
+                            <p>${{ claim.billed_amount|floatformat:2 }}</p>
+                        </td>
+                        <td class="claim-paid">
+                            <p style="{% if claim.paid_amount > 0 %}color: #059669;{% endif %}">${{ claim.paid_amount|floatformat:2 }}</p>
+                        </td>
+                        <td class="claim-status">
+                            <div class='status-container {% if claim.status == 'Paid' %}paid{% elif claim.status == 'Under Review' %}under-review{% elif claim.status == 'Denied' %}denied{% endif %}'>
+                            {% include "icons/dot_icon.svg" %}
+                            <p class="">
+                                {{ claim.status }}
+                            </p>
+                            </div>
+                        </td>
+                        <td class="claim-insurer">
+                            <p>{{ claim.insurer_name }}</p>
+                        </td>
+                        <td class="claim-discharge">
+                            <p>{{ claim.discharge_date|date:"m/d/Y" }}</p>
+                        </td>
+                        <td class="claim-actions" style='display: flex; gap: 10px;'>
+                            <button 
+                            class="view-btn"
+                            @click = "
+                                recordId = (recordId === {{claim.id}}) ? null : {{claim.id}};
+                                openDropdown($event, {{ claim.id }});
+                            "
+                            >
+                            {% include "icons/ellipsis_icon.svg" %} 
+                            </button>
+                            <div 
+                            x-cloak
+                            class='dropdown-menu'
+                            x-show='recordId === {{claim.id}}'
+                            x-transition:enter-start="opacity-0 translate-y-1"
+                            x-transition:enter-end="opacity-100 translate-y-0"
+                            @click.outside="recordId = null"> 
+                                <button
+                                hx-trigger="click"
+                                hx-get="{% url 'claim_detail' claim.id %}"
+                                hx-target="#modal-content"
+                                hx-on::after-swap="alert('Making a request!')"
+                                @click="recordId = null"
+                                > {% include "icons/eye_icon.svg" %} 
+                                    <p> View Details </p> 
+                                </button>
+                                <button
+                                hx-trigger="click"
+                                hx-get="{% url 'claims_form_modal' claim.id 'note' %}"
+                                hx-target="#modal-content"
+                                @click="recordId = null"
+                                > {% include "icons/notebook_icon.svg" %} 
+                                    <p> Add Note </p> 
+                                </button>
+                                <button
+                                hx-trigger="click"
+                                hx-get="{% url 'claims_form_modal' claim.id 'flag' %}"
+                                hx-target="#modal-content"
+                                @click="recordId = null"
+                                > {% include "icons/flag_icon.svg" %} 
+                                    <p> Flag for Review </p>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- Pagination for table -->
+        <div class='pagination'>
+            <button hx-get="/claims/" hx-trigger='click' hx-target='#table-and-pagination' hx-push-url="true"
+            hx-vals='{"page": {% if page_obj.has_previous %}{{ page_obj.previous_page_number }}{% else %}1{% endif %}}'
+            hx-include="#search-form"
+            {% if not page_obj.has_previous %} disabled {% endif %}> 
+            {% include 'icons/previous_icon.svg' %} </button>
+            <div class='pagination-center'>
+                <input type='number' name='page' min="0" max="{{ page_obj.paginator.num_pages }}"
+                value="{{ page_obj.number }}" oninput="
+                if(parseInt(this.value) > parseInt(this.max)) this.value = this.max; 
+                if(parseInt(this.value) < parseInt(this.min)) this.value = this.min;"
+                hx-get="/claims/" hx-trigger="keyup[key=='Enter'], input changed delay:250ms" hx-target='#table-and-pagination' hx-push-url="true"
+                hx-include="#search-form">
+                <p> of {{ page_obj.paginator.num_pages }} </p>
+            </div>
+            <button hx-get="/claims/" hx-trigger='click' hx-target='#table-and-pagination' hx-push-url="true"
+            hx-vals='{"page": {% if page_obj.has_next %}{{ page_obj.next_page_number }}{% else %}{{ page_obj.paginator.num_pages }}{% endif %}}'
+            hx-include="#search-form"
+            {% if not page_obj.has_next %} disabled {% endif %}
+            > {% include 'icons/next_icon.svg' %} </button>
+        </div>
+    </div>
+
+    <script>
+        function dropdown() {
+            return {
+                x: 0,
+                y: 0,
+                visible: false,
+                selectedId: null,
+                openDropdown(event, id) {
+                    const rect = event.target.getBoundingClientRect();
+                    this.x = rect.left + window.scrollX;
+                    this.y = rect.bottom + window.scrollY;
+                    this.selectedId = id;
+                    this.visible = true;
+                }
+            }
+        }
+    </script>

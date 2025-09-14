@@ -1,0 +1,48 @@
+{% extends "claims_base.html" %}
+{% load static %}
+{% block title %} ERISA Insurance  {% endblock %}
+
+{% block content %}
+
+<div class='claims-page'>
+    <div x-data="{modalOpen: false}" class='claims-table-container'>
+        <div class='search-container'> 
+            <form id='search-form' 
+            hx-get="/claims/flags"
+            hx-target="#table-and-pagination"
+            hx-trigger="submit, input changed delay:250ms from:.search-bar, change from:.filter">
+                <div class='search-bar-container'>
+                    {% include 'icons/search_icon.svg' %}
+                    <input class='search-bar' type="text" name="search_query" placeholder="Search claims by id, patient name, or insurer...">
+                </div>
+                <select class='filter' name='filter'> 
+                    <option value='' selected> All </option>
+                    <option value='id'> ID </option>
+                    <option value='patient_name'> Patient Name </option>
+                    <option value='insurer_name'> Insurer Name </option>
+                </select>
+            </form>
+        </div>
+        <div x-cloak x-show="modalOpen" class='modal-container'>
+            <div class='modal-wrapper'>
+                <button @click="modalOpen = false;" class='close-btn'> 
+                    {% include 'icons/close_button.svg' %}
+                </button>
+                <div
+                    @click.outside="modalOpen = false;" 
+                    id='modal-content'
+                    x-on:htmx:after-swap.window="
+                    if ($event.target.id === 'modal-content') {
+                            modalOpen = true;
+                        }
+                    ">
+                </div>
+            </div>
+        </div>
+
+        <div id='table-and-pagination'>
+            {% include "claim_table.html" with claims=claims %}
+        </div>
+    </div>
+</div>
+{% endblock %}
