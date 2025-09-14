@@ -89,3 +89,4 @@ python manage.py runserver
 - Admin Dashboard
 - Settings
 - Seeing your flags/notes
+- Log Out feature
