@@ -1,9 +1,15 @@
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import Claim, ClaimDetail, ClaimNote, ClaimFlag
+from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+
+@login_required(login_url='/login/')
+def logout_user(request):
+    logout(request)
+    return redirect('login')
 
 @login_required(login_url='/login/')
 def claims_list(request):
@@ -52,7 +58,6 @@ def claims_detail_modal(request, claim_id):
     ).first()  # returns a dict or None
     claim_notes = claim.notes.all()
     claim_flags = claim.flags.all();
-    print(claim_notes, claim_flags)
     cpt_codes = claim_detail['cpt_codes'].split(",")
     claim_combined_data = {
         "id": claim.id,
@@ -86,7 +91,7 @@ def claims_form_modal(request, claim_id, form_type):
     
 @login_required(login_url='/login/')
 def claims_create_note(request, claim_id):
-    print("Creating note...")
+    #print("Creating note...")
     if request.method == "POST":
         form_text = request.POST.get("form_text", "").strip()
         if form_text:  # only create if not empty
@@ -103,7 +108,7 @@ def claims_create_note(request, claim_id):
 
 @login_required(login_url='/login/')
 def claims_create_flag(request, claim_id):
-    print("Creating flag...")
+    #print("Creating flag...")
     if request.method == "POST":
         form_text = request.POST.get("form_text", "").strip()
         if form_text:  # only create if not empty

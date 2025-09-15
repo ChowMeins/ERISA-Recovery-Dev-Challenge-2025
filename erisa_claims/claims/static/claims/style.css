@@ -113,7 +113,12 @@ body {
     font-size: 0.9rem;
     font-weight: 500;
 }
-
+.profile-dropdown > ul > li > a {
+    text-decoration: none;
+}
+.profile-dropdown > ul > li > a:link, .profile-dropdown > ul > li > a:visited {
+    color: black;
+}
 .profile:hover > .profile-dropdown {
     display: flex;
     flex-direction: column;
