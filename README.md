@@ -102,5 +102,4 @@ python manage.py runserver
 ## Things not implemented
 - Admin Dashboard
 - A UI to view flags/notes (other than clicking the view details button)
-- Logging out
 - Settings Page
