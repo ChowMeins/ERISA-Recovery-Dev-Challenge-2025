@@ -7,6 +7,8 @@ More information about this can be found here: https://www.erisachallenge.dev/re
 This project was started roughly 5 days before the submission date since I had only found out about it then, however,
 given the time I had, I did the best I could to implement as many requirements and any additional features as I can.
 
+<img src='https://github.com/ChowMeins/ERISA-Recovery-Dev-Challenge-2025/blob/main/InsuranceClaim.png' alt='Insurance Claim Demo' />
+
 ## Features
 
 - **Claims Management**: View, search, and filter healthcare claims
